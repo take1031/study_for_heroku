@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nakagawa's Books オンラインストア</title>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tag %>
+</head>
+<body class="<%= controller.controller_name %>">
+  <div id="banner">
+    <%= image_tag("logo3.png", :size => "119x33") %>
+    <%= @page_title || "Nakagawa's Bookshelf" %>
+  </div>
+  <div id="columns">
+    <div id="side">
+    	<div id="cart">
+    		<% if @cart %>
+    	<!-- <div id="cart" <%# if @cart.line_items.empty? %>
+    		style="display: none" <%# end %>> -->
+    	<%#= hidden_div_if(@cart.line_items.empty?, id: 'cart') do %>
+            <%= render @cart %>
+            <% end %>
+        <%# end %>
+        </div>
+    		<%#= render 'carts/cart', cart: @cart %>
+      <ul>
+        <li><a href="http://www....">ホーム</a></li>
+        <li><a href="http://www..../faq">よくある質問</a></li>
+        <li><a href="http://www..../news">ニュース</a></li>
+        <li><a href="http://www..../contact">お問い合わせ</a></li>
+      </ul>
+
+      <% if session[:user_id] %>
+        <ul>
+          <li><%= link_to '注文', orders_path %></li>
+          <li><%= link_to '商品', products_path %></li>
+          <li><%= link_to 'ユーザー', users_path %></li>
+        </ul>
+        <%= button_to 'ログアウト', logout_path, method: :delete %>
+        <% end %>
+
+    </div>
+    <div id="main">
+      <%= yield %>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+.carts, #side #cart {
+	.cart_title {
+		font: 120% bold;
+	}
+
+	.item_price, .total_line {
+		text-align: right;
+	}
+
+	.total_line .total_cell {
+		font-weight: bold;
+		border-top: 1px solid #595;
+	}
+}
+
+.cart_title {
+	font-size: 30px;
+	margin: 6px 5px 25px;
+	
+
+	p{
+		
+		font-size: 30px;
+		margin: 13px 3px;
+	}
+}

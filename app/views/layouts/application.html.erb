@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>中川製菓のお菓子屋さん</title>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tag %>
+
+  <!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- jQuery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+</head>
+<body class="<%= controller.controller_name %>">
+
+
+<div id="wrap">
+
+<header>
+	<div class="header_box">
+		<div class="header_img">
+	<%= image_tag("logo_to-ka1.png", :size => "119x33") %>
+	    </div>
+	    <div class="header_title">
+    <%= @page_title || "お菓子屋さん" %>
+        </div>
+    </div>
+</header>
+
+<!--ここから左のカラム、情報欄系  -->
+
+<div id="leftnavi">
+
+<div class="box_roof box_color1">
+	<div class="img_circle">
+	<%= image_tag("search_logo.png", :size => "33x33") %>
+    </div>
+    <div class="box_text1">商品検索</div>
+</div>
+
+<div class="search border1">
+	<%= form_tag(store_path, method: "get") do %>
+        <%#= label_tag :title, "商品検索" %>
+        <%= text_field_tag :title, params[:title], :size => "37" %>
+        <%= submit_tag "検索" %>
+    <% end %>
+</div>
+<div class="box_roof box_color3">
+	<div class="img_circle3">
+	<%= image_tag("category_logo.png", :size => "26x26") %>
+    </div>
+    <div class="box_text1">カテゴリー</div>
+</div>
+
+<div class="left_category border1">
+	<ul>
+	<% @categories.each do |category| %>
+    <li><%#= link_to "カテゴリー１","/categories/1" %><%= link_to category.c_name, category %></li>
+		<!-- <li><a href="/categories/show"><%#= category.c_name %></a></li> -->
+	<% end %>
+	<!-- <li><%#= link_to "カテゴリー2","/categories/833" %></li> -->
+	</ul>
+</div>
+<div class="box_roof box_color2">
+	<div class="img_circle">
+		<%= image_tag("link_logo.png", :size => "33x33") %>
+	</div>
+	<div class="box_text2">各種リンク</div>
+</div>
+
+<div class="page_link border1">
+    <ul>
+        <li><%= link_to "ホーム", store_path %></li>
+        <li><a href="">よくある質問</a></li>
+        <li><a href="">ニュース</a></li>
+        <li><%= link_to "お問い合わせ",inquiry_path %></a></li>
+    </ul>
+<%# @users.each do |user| %>
+    <% if session[:user_id] %>
+        <ul>
+        <!--   <li><%#= link_to '注文', orders_path %></li>
+          <li><%#= link_to '商品', products_path %></li> -->
+          <li><%= link_to 'マイページ', @user %></li>
+        </ul>
+        <% if @user.admin? %>
+          <div class="login_btn2"><%= button_to 'ログアウト', logout_path, method: :delete %></div>
+          <div><%= button_to '管理画面へ', admin_path,method: :get %></div>
+        <% else %>
+          <%= button_to 'ログアウト', logout_path, method: :delete %>
+        <% end %>
+    <% else %>
+        <div class="login_btn"><%= button_to 'ログイン', login_path,method: :get %></div>
+        <div><%= button_to '新規登録', new_user_path,method: :get %></div>    
+
+    <% end %><%# end %>
+</div>
+
+<!-- ランキング　実装できそうになったら解放 -->
+
+<div class="box_roof box_color4">
+	<div class="img_circle">
+	<%= image_tag("ranking_logo.png", :size => "33x33") %>
+    </div>
+    <div class="box_text3">売れ筋ランキング</div>
+</div>
+<div class="left_ranking ranking border1">
+	<% @rank.each.with_index(1) do |rank,i| %> 
+	<ul>
+		<li><%= "第#{i}位：" %><%= link_to rank.title, rank %></li>
+	</ul>
+	<% end %>
+</div>
+<!-- ↑までランキング場所 -->
+
+</div>
+
+<!-- ここまでが左のカラム-->
+<!-- ここから真ん中のカラム、メインコンテンツ -->
+<div id="contents">
+<div class="breadcrumbs"><%= breadcrumbs pretext: "", separator: " ＞ " %>
+</div>
+<!-- ↓の<%# yield %>がメインコンテンツになる -->
+  <%= yield %>
+
+</div>
+
+<!-- ここまでが真ん中のカラム -->
+<!-- ここから右のカラム、カート -->
+
+<div id="rightnavi">
+
+	<div class="cart_logo">
+		<%= image_tag("cart_logo.png", :size => "33x33",:class => "cart_logo_image") %>
+	    <div class="kaimono">
+	    	買い物かご	    	
+	    </div>
+	</div>
+
+    <div id="cart" class="border2" >
+    		<% if @cart %>
+    	<!-- <div id="cart" <%# if @cart.line_items.empty? %>
+    		style="display: none" <%# end %>> -->
+    	<%#= hidden_div_if(@cart.line_items.empty?, id: 'cart') do %>
+            <%= render @cart %>
+            <% end %>
+        <%# end %>
+    </div>
+
+
+
+</div>
+
+<!-- ここまでが右のカラム -->
+
+<footer>
+<h2></h2>
+</footer>
+</div>
+</body>
+</html>

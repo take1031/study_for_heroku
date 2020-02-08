@@ -1,0 +1,48 @@
+<%= form_for(@order) do |f| %>
+	<% if @order.errors.any? %>
+	<div id="error_explanation" >
+		<h2><%= pluralize(@order.errors.count, "error") %>
+			prohibited this order from being saved:</h2>
+
+			<ul>
+				<% @order.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+				<% end %>
+			</ul>
+	</div>
+	<% end %>
+
+	<div class="field">
+		<%= f.label :名前 %><br>
+		<%= f.text_field :name, size: 42 %>
+	</div>
+	<div class="field">
+		<%= f.label :住所 %><br>
+		<%= f.text_area :address, rows: 3, cols: 40 %>
+	</div>
+	<div class="field">
+		<%= f.label :Eメール %><br>
+		<%= f.email_field :email, size: 42 %>
+	</div>
+	<div class="field">
+		<%= f.label :支払い方法 %><br>
+		<%= f.select :pay_type, Order::PAYMENT_TYPES, prompt: 'お支払い方法を選択してください' %>
+	</div>
+	<div>
+	<%= f.hidden_field :user_id, value: current_user.id %>
+    </div>
+
+	<div class="actions order_botton">
+		<%= f.submit '注文する' %>
+	</div>
+<% end %>
+
+<!-- 
+<table>
+	<tr class="total_line">
+		<td colspan="2">合計</td>
+		<td><%#= @cart.total_count %> 点 </td>
+		<td class="total_cell"><%#= number_to_currency( @cart.total_price, :locale => 'jp') %></td>
+	</tr>
+
+</table> -->

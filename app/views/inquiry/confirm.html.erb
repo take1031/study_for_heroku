@@ -1,0 +1,70 @@
+<style>
+  .form {
+    border: solid;
+    background: paleturquoise;
+  }
+  .form h1 {
+    text-align: center;
+    font-weight: normal;
+    padding-top: 12px;
+  }
+  .form .button {
+    margin: 20px auto 10px;
+    display: block;
+    width: 200px;
+    background-color: #8888bb;
+    line-height: 44px;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 6px;
+    appearance: none;
+    border: none;
+    color: #fff;
+  }
+
+  .form input[type="text"] ,textarea{
+    width: 100%;
+    border-radius: 4px;
+    line-height: 32px;
+    border: 1px solid #ccc;
+    /*padding: 0 15px;*/
+  }
+  .form td{
+        padding: 10px 35px 7px 35px;
+  }
+  .form th{
+        width: 180px;
+        text-align: right;
+  }
+  .table_inquiry{
+    width: 100%;
+  }
+
+</style>
+
+
+<%= form_for @inquiry, :url => inquiry_thanks_path do |f| %>
+  <div class="form">
+    <h1>お問い合わせ</h1>
+ 
+  <table class="table_inquiry">
+    <tr>
+      <th>名前：</th>
+      <td><<%= f.hidden_field :name %>
+        <%= @inquiry.name %></td>
+    </tr>
+    <tr>
+      <th>メールアドレス：</th>
+      <td><%= f.hidden_field :email %>
+        <%= @inquiry.email %></td>
+    </tr>
+    <tr>
+      <th>お問い合わせ内容：</th>
+      <td><%= f.hidden_field :message %>
+        <%= simple_format(@inquiry.message) %></td>
+    </tr>
+  </table>
+  <%= f.submit '送信！', class: 'button' %>
+<% end %>
+</div>
+

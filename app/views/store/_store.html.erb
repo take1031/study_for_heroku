@@ -1,0 +1,48 @@
+<% @products.each do |product| %>
+<table class="store_table" border="0" cellspacing="0" cellpadding="2" align="center">	
+	<tbody>
+		<tr align="center" valign="top">
+			<td style="width: 146px">
+				
+			<div class="store_img_box">
+			<figure class="snip1437">
+
+				<div class="store_img">
+					<% if product.image_url.empty? %>
+					<%= image_tag("no_image.jpg", :size => "165x165" ) %>
+
+					<% else %>
+					<%= image_tag(product.image_url, :size => "165x165" ) %>
+					<% end %>
+				</div>
+			  <figcaption>
+			    <ul class="links">
+			      <li><%= link_to '商品詳細', product %></li>
+			    </ul>
+			  </figcaption>
+			</figure>
+			</div>
+				<div class="store_underbox">
+					<div class="store_p_title"><%= product.title %></div>			
+				</div>
+				<div class="store_price">
+					<%= number_to_currency(product.price, :locale => 'jp') %>
+				</div>
+				<div class="store_cart_in store_button">
+					<%= link_to image_tag('cart_in.png', :size => "83x30"), line_items_path(product_id: product), remote: true ,method: :post %>
+				</div>
+				<div id="favjs" class="store_button">
+					<% unless session[:user_id].nil? %>
+					<% if product.favorited_by? current_user %>
+			              <%= link_to image_tag('no_fav.png', :size => "83x30"), product_favorites_path(product), remote: true ,method: :delete %>
+			        <% else %>
+			              <%= link_to image_tag('add_fav.png', :size => "83x30"), product_favorites_path(product), remote: true ,method: :post %>
+			        <% end %>
+			        <% end %>
+				</div>
+				
+			</td>
+		</tr>
+	</tbody>
+</table>
+<% end %>

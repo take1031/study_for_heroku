@@ -1,0 +1,45 @@
+
+<div class="admin_order_page">
+<div class="admin_title">注文一覧<div class="admin_mini2">注文数：<%= @orders.count %> 件</div></div>
+
+  <div class="admin_serch">
+      <%= form_tag(orders_path, method: :get) do %>
+        <div>
+          <%= search_field_tag "q", params[:q], class: "", placeholder: "キーワード検索" %>
+          <span class="">
+            <%= submit_tag "検索" %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+
+<table class="admin_table" border="1">
+  <thead>
+    <tr>
+      <th>注文ユーザー</th>
+      <th>注文商品数</th>
+      <th>支払い金額</th>
+      <th>支払い形態</th>
+      <th>注文日</th>
+      <th>id</th>
+      <th>編集</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @orders.each do |order| %>
+    <tr>
+      <td><%= order.user.name %></td>
+      <td><%= order.total_count %></td>
+      <td><%= number_to_currency(order.total_price, :locale => 'jp') %></td>
+      <td><%= order.pay_type %></td>
+      <td><%= order.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+      <td><%= order.id %></td>
+      <td><%= link_to '詳細', order_path(order) %><br>
+        <%= link_to '削除', order, data: {confirm: 'この注文を削除してよろしいですか？'}, method: :delete %></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
+</div>
+
+<p><%= will_paginate @orders %></p>

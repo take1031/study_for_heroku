@@ -1,0 +1,20 @@
+<% if line_item == @current_item %>
+<dl id="current_item">
+<% else %>
+<dl>
+<% end %>
+	<dt><%= line_item.product.title %></dt>
+	<dd class="item_price test1"><%= number_to_currency( line_item.product.price, :locale => 'jp') %></dd>
+	<dd class="test1 test2">&times; <%= line_item.quantity %> 個　＝</dd>
+	<dd class="test1 test2 price_item">   <%= number_to_currency( line_item.total_price, :locale => 'jp')  %></dd>
+	<dd class="test1 test2 test3 store_button"><%#= link_to '-', decrease_line_item_path(line_item), :method => :put, remote: true %>
+        <%= link_to image_tag('-icon.png', :size => "15x15"), decrease_line_item_path(line_item), remote: true ,method: :put %>		
+	</dd>
+	<dd class="test1 test2 test3 store_button"><%#= link_to '+', increase_line_item_path(line_item), :method => :put, remote: true %>
+		<%= link_to image_tag('plusicon.png', :size => "15x15"), increase_line_item_path(line_item), remote: true ,method: :put %>
+	</dd><br><hr>
+	<!-- <td><%#= button_to '削除', line_item, :method => :delete %></td> -->
+</dl>
+
+
+

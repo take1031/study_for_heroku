@@ -1,0 +1,55 @@
+<div class="admin_c_title">
+<div class="admin_title">カテゴリー一覧</div>
+
+<div class="admin_serch">
+
+<%= form_for(@category, :url => {:controller => :categories, :action => :create}) do |f| %>
+<%#= form_for @categories do |f| %>
+  <% if @category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(category.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%#= f.label :c_name,"カテゴリー名" %>
+    <%= f.text_field :c_name %>
+  </div>
+
+
+  <div>
+    <%= f.submit "カテゴリー追加" %>
+  </div>
+</div>
+<% end %>
+
+</div>
+
+
+<table class="admin_table2" border="1">
+	<thead>
+		<tr> 
+			<th>カテゴリ名</th>
+			<th>登録数</th>
+      <th>編集</th>
+		</tr>
+	</thead>
+	<tbody>
+  <% @categories.each do |category| %>
+		<tr>
+			<td class="admin_c"><%= category.c_name %></td>
+			<td class="admin_c"><%= category.products.count %></td>
+      <td>
+        <%= link_to '編集', edit_category_path(category) %><br>
+        <%= link_to '削除', category, data:{ confirm: 'このカテゴリーを削除してよろしいですか？'}, method: :delete %>
+      </td>
+		</tr>
+	</tbody>
+  <% end %>
+</table>

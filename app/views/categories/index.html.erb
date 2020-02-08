@@ -1,0 +1,30 @@
+
+<h1>[ <%#= @category.c_name %> ]　一覧</h1>
+
+<div>商品数：<%#= @category.products.count %></div>
+
+
+<h1>Listing products</h1>
+
+<table>
+<% @categories.each do |category| %>
+  <tr class="">
+
+    <td class="">
+      <dl>
+        <dt><%= category.c_name %></dt>
+      </dl>
+    </td>
+
+    <td class="">
+      
+      <%= link_to 'Edit', edit_category_path(category) %><br/>
+      <%= link_to 'Destroy', category, data: {confirm: 'Are you sure?'}, method: :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%#= link_to 'New category', new_category_path %>

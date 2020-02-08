@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>中川のお菓子屋さん</title>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tag %>
+
+  <!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- jQuery UI -->
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+</head>
+<body class="<%= controller.controller_name %>">
+
+
+<div id="wrap">
+
+<header>
+	<div class="header_box">
+		<div class="header_img">
+	<%= image_tag("logo_to-ka1.png", :size => "119x33") %>
+	    </div>
+	    <div class="header_title_admin">
+    <%= @page_title || "管理者用ページ" %>
+        
+        <div class="admin_home a_h2"><%= button_to "通常ホーム", store_url, method: :get %></div><div class="admin_home"><%= button_to "管理ホーム", admin_url, method: :get %></div>
+    </div></div>
+</header>
+
+<!-- ここから真ん中のカラム、メインコンテンツ -->
+
+<div id="contents_admin">
+<!-- ↓の<%# yield %>がメインコンテンツになる -->
+  <%= yield %>
+
+</div>
+
+<!-- ここまでが真ん中のカラム -->
+
+
+<footer>
+<h2></h2>
+</footer>
+</div>
+</body>
+</html>

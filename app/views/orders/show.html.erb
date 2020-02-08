@@ -1,0 +1,77 @@
+
+<% breadcrumb :order %>
+
+<div class="o_show_day">注文日： <%= @order.created_at.strftime("%Y年%m月%d(#{%w(日 月 火 水 木 金 土)[@order.created_at.wday]})") %></div>
+
+<table class="o_show_databox">
+
+  <tr><td class="o_show_td">名前：</td><td><%= @order.name %></td></tr>
+  <tr><td class="o_show_td">Eメール：</td><td><%= @order.email %></td></tr>
+  <tr><td class="o_show_td">住所：</td><td><%= @order.address %></td></tr>
+  <tr><td class="o_show_td">支払い方法：</td><td><%= @order.pay_type %></td></tr>
+  <tr><td class="o_show_td">注文数：</td><td><%= @order.total_count %> 点</td></tr>
+  <tr><td class="o_show_td">支払い金額：</td><td><div class="total_cell"><%= number_to_currency(@order.total_price, :locale => 'jp') %></div></td></tr>
+
+</table>
+
+<div class="o_show_day">注文商品内容</div>
+
+
+<div class="p_show_box">
+<%# breadcrumb :product, @product %>
+
+<% @order.line_items.each do |order| %>
+<div class="p_show_title">
+  <div class="p_show_title_left">商品名:
+  <div class="p_show_title_right"><%= order.product.title %></div></div>
+</div>
+
+
+<div class="p_show_img">
+  <% if order.product.image_url.empty? %>
+    <%= image_tag("no_image.png") %>
+
+  <% else %>
+    <%= image_tag(order.product.image_url) %>
+  <% end %> 
+</div>
+<div class="p_show_right_box">
+  <div>
+    商品名:
+    <%= order.product.title %>
+  </div>
+  <div class="p_show_description">
+    商品説明:
+    <%= order.product.description %>
+  </div>
+  <div class="p_show_c_name">
+    カテゴリー:
+    <%= order.product.category.c_name %>
+  </div>
+  <div class="p_show_price">
+    <div class="p_show_price_left">商品単価:</div>
+    <div class="o_show_price_right"><%= number_to_currency(order.product.price, :locale => 'jp') %></div>
+  </div>
+  <div class="p_show_price">
+    <div class="p_show_price_left"> 注文数: <%= order.quantity %> コ</div>
+    <div class="p_show_price_right"><%= number_to_currency(order.total_price, :locale => 'jp') %></div>
+  </div>
+
+
+  <div class="store_cart_in store_button">
+    <%= link_to image_tag('cart_in.png', :size => "120x50"), line_items_path(product_id: order.product), remote: true ,method: :post %>
+  </div>
+  <div class="store_button" style="margin-left: 10px;">
+    <% unless session[:user_id].nil? %>
+    <% if order.product.favorited_by? current_user %>
+              <%= link_to image_tag('no_fav.png', :size => "120x50"), product_favorites_path(order.product), method: :delete %>
+        <% else %>
+              <%= link_to image_tag('add_fav.png', :size => "120x50"), product_favorites_path(order.product), method: :post %>
+        <% end %>
+        <% end %>
+  </div>
+</div>
+<%#= link_to 'Edit', edit_product_path(@product) %>
+<%#= link_to 'Back', store_path %>
+<% end %>
+</div>

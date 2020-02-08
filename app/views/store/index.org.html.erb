@@ -1,0 +1,26 @@
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+
+<h1>Nakagawa's カタログ</h1>
+
+<% @products.each do |product| %>
+  <div class="entry">
+	<%= image_tag(product.image_url) %>
+	<h3><%= product.title %></h3>
+	<%= sanitize(product.description.truncate(20)) %>
+	<div class="price_line">
+		<span class="price"><%= number_to_currency(product.price, :locale => 'jp') %></span>
+		<!-- 画像クリックでカート追加できなくなる<%#= button_to '詳細' %> -->
+		<%= button_to 'カートに入れる', line_items_path(product_id: product), remote: true %>
+		<%#= link_to "いいね", product_favorites_path(product), method: :post %>
+		<% unless session[:user_id].nil? %>
+		<% if product.favorited_by? current_user %>
+              <%= button_to "いいね解除", product_favorites_path(product), method: :delete %>
+        <% else %>
+              <%= link_to "いいね", product_favorites_path(product), method: :post %>
+        <% end %>
+        <% end %>
+	</div> 
+  </div>
+<% end %>

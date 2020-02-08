@@ -1,0 +1,9 @@
+Dear <%= @example.name %> 様
+
+この度は,Nakagawa's Bookshelfでのご注文、誠にありがとうございます。
+
+あなたがご注文されたのは以下の商品です。
+
+<%= render @example.line_items %>
+
+あなたのご注文を発送する際には、別途電子メールでご連絡いたします。

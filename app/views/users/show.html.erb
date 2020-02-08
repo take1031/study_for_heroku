@@ -1,0 +1,101 @@
+<!-- <p id="notice"><%#= notice %></p> -->
+<% breadcrumb :user, @user %>
+<div class="u_top_box">
+<p>
+  <b>名前:</b>
+  <%= @user.name %>
+</p>
+
+
+<p>
+  <b>登録メールアドレス:</b>
+  <%= @user.email %>
+</p>
+  <div class="u_top_edit"><%= button_to '編集', edit_user_path(@user), method: :get %></div>
+</div>
+
+        <div class="u_fav_box"><h2>お気に入り一覧</h2></div>
+        <div class="u_fav_count">お気に入り登録数：<%= @user.favorites.count %>  コ</div> 
+
+<div class="center_box">
+<% @users.each do |user| %>
+<table class="store_table" border="0" cellspacing="0" cellpadding="2" align="center">	
+	<tbody>
+		<tr align="center" valign="top">
+			<td style="width: 146px">
+				
+			<div class="store_img_box">
+			<figure class="snip1437">
+
+				<div class="store_img">
+					<% if user.image_url.empty? %>
+					<%= image_tag("no_image.jpg", :size => "165x165" ) %>
+
+					<% else %>
+					<%= image_tag(user.image_url, :size => "165x165" ) %>
+					<% end %>
+				</div>
+			  <figcaption>
+			    <ul class="links">
+			      <li><%= link_to '商品詳細', user %></li>
+			    </ul>
+			  </figcaption>
+			</figure>
+			</div>
+				<div class="store_underbox">
+					<div class="store_p_title"><%= user.title %></div>			
+				</div>
+				<div class="store_price">
+					<%= number_to_currency(user.price, :locale => 'jp') %>
+				</div>
+				<div class="store_cart_in store_button">
+					<%= link_to image_tag('cart_in.png', :size => "83x30"), line_items_path(product_id: user), remote: true ,method: :post %>
+				</div>
+				<div class="store_button">
+					<% unless session[:user_id].nil? %>
+					<% if user.favorited_by? current_user %>
+			              <%= link_to image_tag('no_fav.png', :size => "83x30"), product_favorites_path(user), remote: true ,method: :delete %>
+			        <% else %>
+			              <%= link_to image_tag('add_fav.png', :size => "83x30"), product_favorites_path(user), remote: true ,method: :post %>
+			        <% end %>
+			        <% end %>
+				</div>
+				
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+<% end %>
+</div>
+
+<div class="u_fav_page"><%= will_paginate(@users, :previous_label => '←前', :next_label => '次→') %></div>
+
+<div class="u_fav_box u_order_box"><h2>注文履歴</h2></div>
+        <div class="u_fav_count">注文数：<%= @user.orders.count %>  回</div> 
+
+<table class="admin_table" border="1">
+	<thead>
+		<tr>
+			<th>購入日</th>
+			<th>購入品数</th>
+			<th>購入金額</th>
+			<th>詳細</th>
+		</tr>
+	</thead>
+	<tbody>
+  <% @orders.each do |order| %>
+		<tr>
+			<td><%= order.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+			<td><%= order.total_count %></td>
+			<td><%= number_to_currency(order.total_price, :locale => 'jp') %></td>
+			<td><%= link_to '詳細', order_path(order) %></td>
+		</tr>
+	</tbody>
+  <% end %>
+</table>
+<div class="u_fav_page"><%= will_paginate(@orders, :previous_label => '←前', :next_label => '次→') %></div>
+
+
+<%#= link_to 'Edit', edit_user_path(@user) %> 
+<%#= link_to 'Back', users_path %>

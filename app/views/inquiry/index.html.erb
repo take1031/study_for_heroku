@@ -1,0 +1,86 @@
+<style>
+  .form {
+    border: solid;
+    background: paleturquoise;
+  }
+  .form h1 {
+    text-align: center;
+    font-weight: normal;
+    padding-top: 12px;
+  }
+  .form .button {
+    margin: 20px auto 10px;
+    display: block;
+    width: 200px;
+    background-color: #8888bb;
+    line-height: 44px;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 6px;
+    appearance: none;
+    border: none;
+    color: #fff;
+  }
+
+  .form input[type="text"] ,textarea{
+    width: 100%;
+    border-radius: 4px;
+    line-height: 32px;
+    border: 1px solid #ccc;
+    /*padding: 0 15px;*/
+  }
+  .form td{
+        padding: 10px 50px 7px 0px;
+  }
+  .form th{
+        width: 180px;
+        text-align: right;
+  }
+  .table_inquiry{
+    width: 100%;
+  }
+  .form .alert{
+    text-align: center;
+  }
+  .form .field_with_errors{
+    width: 100%;
+
+  }
+
+</style>
+
+
+<%= form_for @inquiry, :url => inquiry_confirm_path do |f| %>
+  <div class="form">
+    <h1>お問い合わせ</h1>
+  
+ 
+  <% if @inquiry.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <strong>入力内容にエラーがあります</strong>
+      <ul>
+        <% @inquiry.errors.each do |attr, msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <table class="table_inquiry">
+    <tr>
+      <th>名前<span class="text-danger">（必須）</span></th>
+      <td><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <th>メールアドレス<span class="text-danger">（必須）</span></th>
+      <td><%= f.text_field :email %></td>
+    </tr>
+    <tr>
+      <th>お問い合わせ内容</th>
+      <td><%= f.text_area :message %></td>
+    </tr>
+  </table>
+  <%= f.submit '確認', class: 'button' %>
+<% end %>
+</div>
+

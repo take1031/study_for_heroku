@@ -1,0 +1,81 @@
+<style>
+
+  .u_new .button {
+    margin: 20px auto 10px;
+    display: block;
+    width: 150px;
+    background-color: #8888bb;
+    line-height: 44px;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 6px;
+    appearance: none;
+    border: none;
+    color: #fff;
+  }
+  .u_new input{
+    width: 250px;
+    margin-right: 50px;
+  }
+  .u_new{
+    text-align: center;
+  }
+  .u_new label{
+    text-align: right!important;
+    width: 7em !important;
+    margin-left: 15px;
+  }
+  
+
+</style>
+
+
+
+
+<div class="depot_form u_new">
+
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %>
+        prohibited this user from being saved:</h2>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+  <legend>ユーザ情報の入力</legend>
+
+  <div>
+    <%= f.label :name, 'ユーザー名' %>:
+    <%= f.text_field :name, size: 40 %>
+  </div>
+
+   <div>
+    <%= f.label :email %>:
+    <%= f.text_field :email, size: 40 %>
+  </div>
+
+  <div>
+    <%= f.label :password, 'パスワード' %>:
+    <%= f.password_field :password, size: 40 %>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation, '確認' %>:
+    <%= f.password_field :password_confirmation, size: 40 %>
+  </div>
+
+  <div>
+    <%= f.submit '作成！', class: 'button' %>
+  </div>
+
+  </fieldset>
+<% end %>
+
+</div>
+
